@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吉見グループ サイトリニューアル打ち合わせ資料</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  :root{
+    --navy:#1c2b3f;
+    --navy-deep:#121d2c;
+    --brass:#b3894f;
+    --brass-light:#d8b479;
+    --paper:#efe9df;
+    --paper-card:#f7f3ea;
+    --ink:#22262b;
+    --ink-soft:#5c6570;
+    --line:#d9cfba;
+    --green-ok:#4c6b52;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    font-family:'Noto Sans JP', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ---------- SIDEBAR : 台帳の見出しタブ ---------- */
+  .sidebar{
+    width:230px;
+    flex-shrink:0;
+    background:var(--navy-deep);
+    color:#e8e2d4;
+    position:sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    padding:28px 0;
+  }
+  .sidebar-brand{
+    padding:0 24px 24px 24px;
+    border-bottom:1px solid rgba(232,226,212,0.15);
+    margin-bottom:8px;
+  }
+  .sidebar-brand .eyebrow{
+    font-size:11px;
+    letter-spacing:0.16em;
+    color:var(--brass-light);
+    margin-bottom:6px;
+  }
+  .sidebar-brand h1{
+    font-family:'Noto Serif JP', serif;
+    font-size:19px;
+    font-weight:700;
+    line-height:1.5;
+  }
+  .tab-list{
+    list-style:none;
+    flex:1;
+    padding-top:8px;
+  }
+  .tab-item{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:14px 24px;
+    cursor:pointer;
+    border-left:3px solid transparent;
+    font-size:14px;
+    letter-spacing:0.02em;
+    color:#c7c0ae;
+    transition:background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .tab-item .num{
+    font-family:'Noto Serif JP', serif;
+    font-size:12px;
+    color:var(--brass-light);
+    opacity:0.8;
+  }
+  .tab-item:hover{
+    background:rgba(255,255,255,0.04);
+    color:#fff;
+  }
+  .tab-item.active{
+    background:rgba(179,137,79,0.16);
+    border-left-color:var(--brass);
+    color:#fff;
+  }
+  .sidebar-foot{
+    padding:16px 24px 0 24px;
+    border-top:1px solid rgba(232,226,212,0.15);
+    font-size:11px;
+    color:#8b8778;
+    line-height:1.6;
+  }
+
+  /* ---------- MAIN ---------- */
+  main{
+    flex:1;
+    padding:44px 56px 80px 56px;
+    max-width:1180px;
+  }
+  .section{
+    display:none;
+  }
+  .section.active{
+    display:block;
+    animation:fade 0.25s ease;
+  }
+  @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+
+  .section-head{
+    margin-bottom:30px;
+    padding-bottom:18px;
+    border-bottom:2px solid var(--navy);
+  }
+  .section-head .eyebrow{
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--brass);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .section-head h2{
+    font-family:'Noto Serif JP', serif;
+    font-size:26px;
+    color:var(--navy);
+  }
+  .section-head p{
+    margin-top:8px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  .major-block{ margin-bottom:46px; }
+  .major-block:last-child{ margin-bottom:0; }
+  .major-head{
+    font-family:'Noto Serif JP', serif;
+    font-size:19px;
+    font-weight:700;
+    color:var(--navy);
+    background:rgba(179,137,79,0.12);
+    border-left:4px solid var(--brass);
+    padding:9px 16px;
+    margin-bottom:20px;
+  }
+
+  .group-block{ margin-bottom:34px; }
+  .group-block:last-child{ margin-bottom:0; }
+  .group-block h3{
+    font-family:'Noto Serif JP', serif;
+    font-size:15px;
+    color:var(--navy);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .group-block h3::before{
+    content:"";
+    width:6px; height:6px;
+    background:var(--brass);
+    display:inline-block;
+    transform:rotate(45deg);
+  }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:14px;
+  }
+
+  .card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    padding:18px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    position:relative;
+    transition:border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .card.linked{ cursor:pointer; }
+  .card.linked:hover{
+    border-color:var(--brass);
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(28,43,63,0.10);
+  }
+  .card-name{
+    font-size:15.5px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.4;
+  }
+  .card-sub{
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .card-note{
+    font-size:12px;
+    color:#a2673f;
+    font-style:italic;
+  }
+  .card-url{
+    font-size:11.5px;
+    color:var(--brass);
+    word-break:break-all;
+    margin-top:auto;
+    padding-top:6px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .card-url svg{ flex-shrink:0; }
+  .no-link{
+    font-size:11.5px;
+    color:#9a9484;
+    margin-top:auto;
+    padding-top:6px;
+  }
+  .status-dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    display:inline-block;
+    background:var(--line);
+  }
+  .status-dot.ok{ background:var(--green-ok); }
+
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:2px;
+  }
+  .tag{
+    font-size:11px;
+    background:rgba(28,43,63,0.06);
+    color:var(--navy);
+    padding:3px 8px;
+    border:1px solid var(--line);
+  }
+
+  .ref-card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    padding:20px 22px;
+  }
+  .ref-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom:10px;
+    cursor:pointer;
+  }
+  .ref-card-top:hover .card-name{ color:var(--brass); }
+  .ref-idx{
+    font-family:'Noto Serif JP', serif;
+    font-size:13px;
+    color:var(--brass);
+    min-width:26px;
+  }
+
+  ::selection{ background:var(--brass-light); }
+
+  @media (max-width:880px){
+    body{ flex-direction:column; }
+    .sidebar{ position:relative; height:auto; width:100%; }
+    .tab-list{ display:flex; overflow-x:auto; }
+    .tab-item{ white-space:nowrap; }
+    main{ padding:28px 20px 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="eyebrow">MEETING REFERENCE</div>
+    <h1>吉見グループ<br>サイトリニューアル<br>打ち合わせ資料</h1>
+  </div>
+  <ul class="tab-list">
+    <li class="tab-item active" data-target="sec-group"><span class="num">01</span>グループ企業・関連団体</li>
+    <li class="tab-item" data-target="sec-ref"><span class="num">02</span>デザイン参考サイト</li>
+  </ul>
+  <div class="sidebar-foot">クリックで各サイトを新しいタブで開きます。</div>
+</nav>
+
+<main>
+
+  <!-- 01 グループ企業・関連団体 -->
+  <section id="sec-group" class="section active">
+    <div class="section-head">
+      <div class="eyebrow">01 — GROUP COMPANIES &amp; RELATED ORGANIZATIONS</div>
+      <h2>吉見グループのグループ企業・関連団体</h2>
+      <p>グループ企業／スポーツ支援／地域活動を見出しごとに掲載。URLが確認できていない企業は「URL未確認」と表示しています。</p>
+    </div>
+
+    <div class="major-block">
+    <h3 class="major-head">グループ企業</h3>
+
+    <div class="group-block">
+      <h3>シェアードサービス事業</h3>
+      <div class="card-grid">
+        <div class="card"><div class="card-name">吉見グループ株式会社</div><div class="no-link"><span class="status-dot"></span> URL未確認</div></div>
+        <div class="card"><div class="card-name">吉見商事株式会社</div><div class="no-link"><span class="status-dot"></span> URL未確認</div></div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <h3>物流事業</h3>
+      <div class="card-grid">
+        <div class="card linked" data-url="https://www.yamaichi-y.jp/">
+          <div class="card-name">株式会社ヤマイチ</div>
+          <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>yamaichi-y.jp</div>
+        </div>
+        <div class="card linked" data-url="https://yoshimifoods-y.jp/">
+          <div class="card-name">株式会社ヨシミフーズ</div>
+          <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>yoshimifoods-y.jp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <h3>人材派遣事業</h3>
+      <div class="card-grid">
+        <div class="card linked" data-url="https://skillplaza.co.jp/">
+          <div class="card-name">株式会社スキルプラザ</div>
+          <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>skillplaza.co.jp</div>
+        </div>
+        <!-- <div class="card"><div class="card-name">株式会社キャリアコンパス</div><div class="no-link"><span class="status-dot"></span> URL未確認</div></div> -->
+      </div>
+    </div>
+
+    <div class="group-block">
+      <h3>不動産事業DX</h3>
+      <div class="card-grid">
+        <div class="card linked" data-url="https://www.yasuuemon.co.jp/">
+          <div class="card-name">株式会社松本安右衛門商店</div>
+          <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>yasuuemon.co.jp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <h3>製造事業</h3>
+      <div class="card-grid">
+        <div class="card linked" data-url="https://www.asentrust.co.jp/">
+          <div class="card-name">株式会社アゼントラスト</div>
+          <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>asentrust.co.jp</div>
+        </div>
+        <div class="card"><div class="card-name">三栄実業株式会社</div><div class="no-link"><span class="status-dot"></span> URL未確認</div></div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <h3>その他</h3>
+      <div class="card-grid">
+        <div class="card"><div class="card-name">合資会社吉見屋商店</div><div class="no-link"><span class="status-dot"></span> URL未確認</div></div>
+      </div>
+    </div>
+    </div><!-- /major-block グループ企業 -->
+
+    <div class="major-block">
+    <h3 class="major-head">スポーツ支援</h3>
+    <div class="card-grid">
+      <div class="card linked" data-url="https://arukas-kumagaya.jp/">
+        <div class="card-name">アルカス熊谷</div>
+        <div class="card-sub">オフィシャルパートナー</div>
+        <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>arukas-kumagaya.jp</div>
+      </div>
+      <div class="card linked" data-url="https://panasonic.co.jp/sports/wildknights/">
+        <div class="card-name">埼玉ワイルドナイツ</div>
+        <div class="card-sub">サポータークラブ　プラチナEXメンバー</div>
+        <div class="card-url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>panasonic.co.jp/sports/wildknights</div>
+      </div>
+    </div>
+    </div><!-- /major-block スポーツ支援 -->
+
+
+
+  </section>
+
+  <!-- 02 デザイン参考サイト -->
+  <section id="sec-ref" class="section">
+    <div class="section-head">
+      <div class="eyebrow">02 — DESIGN REFERENCE</div>
+      <h2>デザイン参考サイト</h2>
+      <p>ファーストビューの動画演出・固定メニュー・導線設計などを比較検討するための参考サイト一覧です。</p>
+    </div>
+
+    <div class="group-block">
+      <h3>参考サイト</h3>
+      <div class="card-grid" id="ref-grid"></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // タブ切り替え
+  const tabs = document.querySelectorAll('.tab-item');
+  const sections = document.querySelectorAll('.section');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      sections.forEach(s=>s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+      window.scrollTo({top:0});
+    });
+  });
+
+  // リンクカード：クリックで新規タブ
+  document.addEventListener('click', (e)=>{
+    const card = e.target.closest('[data-url]');
+    if(card){ window.open(card.dataset.url, '_blank', 'noopener'); }
+  });
+
+  const linkSVG = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>`;
+
+  function displayUrl(url){
+    return url.replace(/^https?:\/\//,'').replace(/\/$/,'');
+  }
+
+  function renderRefCard(item, idx){
+    const el = document.createElement('div');
+    el.className = 'ref-card';
+    el.innerHTML = `
+      <div class="ref-card-top linked" data-url="${item.url}">
+        <div>
+          <div class="card-name">${item.name}</div>
+          <div class="card-url" style="padding-top:4px;">${linkSVG}${displayUrl(item.url)}</div>
+        </div>
+        <div class="ref-idx">${String(idx+1).padStart(2,'0')}</div>
+      </div>
+      <div class="tag-row">${item.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    `;
+    return el;
+  }
+
+  const refSites = [
+    { name:"シンカ株式会社", url:"https://shinka-inc.com/",
+      tags:["ローディング","動画（キャッチコピー含む）","動画上の装飾／上下マスク＋企業ロゴ","固定メニュー","ニュース導線"] },
+    { name:"D-POPS リクルート", url:"https://recruit.d-pops.co.jp/",
+      tags:["メインの見せ方"] },
+    { name:"全農物流", url:"https://recruit.zennoh-butsuryu.co.jp/",
+      tags:["全体的な雰囲気","動画","（競合の例）"] },
+    { name:"協和石油ルブリカンツ株式会社", url:"https://www.kyouwa-oil.com/",
+      tags:["ヒーローエリアからスクロールしたときの見せ方"] },
+    { name:"温泉の宿 雷鳥", url:"https://ghraicho.com/",
+      tags:["ヒーローエリアからスクロールしたときの見せ方"] },
+    { name:"アパートメントホテル「MIMARU」", url:"https://mimaruhotels.com/ja/",
+      tags:["動画（キャッチコピー含む）","固定メニュー","cookie導線"] },
+    { name:"グリーングロース", url:"https://greengrowth.co.jp/",
+      tags:["動画","動画上の装飾／マスク","キャッチコピー","固定メニュー","ニュース導線"] },
+    { name:"J-POWERハイテック", url:"https://www.jphytec.co.jp/",
+    tags:["動画","動画上の装飾／アニメーション","キャッチコピー","固定メニュー"] },
+    { name:"サンフロロシステム", url:"https://www.sunfluoro.co.jp/",
+    tags:["動画（ファーストビュー以降も）","キャッチコピー","固定メニュー"] },
+    { name:"中川インテリア株式会社", url:"https://nakagawa-in.jp/",
+    tags:["動画","動画上の装飾／企業ロゴ","キャッチコピー","固定メニュー"] },
+    { name:"あしがくぼ", url:"https://michinoeki-ashigakubo.com/",
+    tags:["レイアウト"] },
+    { name:"北浜法律事務所", url:"https://www.kitahama.or.jp/",
+    tags:["サイトの雰囲気"] },
+    { name:"パーソルホールディングス", url:"https://www.persol-group.co.jp/",
+      tags:["ローディング","動画（静止画／キャッチコピー含む）","動画上からリンク","動画停止ボタン（アクセシビリティ対応）","固定メニュー"] },
+  ];
+
+  const refGrid = document.getElementById('ref-grid');
+  refSites.forEach((item, idx)=> refGrid.appendChild(renderRefCard(item, idx)));
+
+</script>
+
+</body>
+</html>
