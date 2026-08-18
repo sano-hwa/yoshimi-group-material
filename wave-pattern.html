@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Wave Animation</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #0b2e6b;
+    overflow: hidden;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+
+  /* 背景画像の代わりのダミー背景（実際は建物写真などを敷く想定） */
+  .bg-photo {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,40,90,0.55), rgba(10,40,90,0.75)),
+      repeating-linear-gradient(135deg, #6b8fc4 0 2px, #5c80b8 2px 4px);
+    background-size: cover;
+  }
+
+  svg.wave-svg {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 45vh;
+    bottom: 0;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="bg-photo"></div>
+
+  <!-- 塗りの波レイヤー（重なりで濃淡が生まれる） -->
+  <svg class="wave-svg" id="waveFillSvg" preserveAspectRatio="none" viewBox="0 0 1600 400">
+    <path id="waveFill1" fill="#2f5fa8" fill-opacity="0.55" d=""></path>
+    <path id="waveFill2" fill="#1c4488" fill-opacity="0.6" d=""></path>
+    <path id="waveFill3" fill="#0f2f6e" fill-opacity="0.75" d=""></path>
+  </svg>
+
+  <!-- 白い1pxラインの波（塗りレイヤーの少し上に重ねる） -->
+  <svg class="wave-svg" id="waveLineSvg" preserveAspectRatio="none" viewBox="0 0 1600 400" style="height:48vh;">
+    <path id="waveLine1" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.85" d=""></path>
+    <path id="waveLine2" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.4" d=""></path>
+  </svg>
+</div>
+
+<script>
+/*
+  波は複数の正弦波の合成でパスを生成し、
+  時間経過で位相(phase)をずらすことで「動いている」ように見せています。
+*/
+
+const width = 1600;
+const height = 400;
+const points = 120; // パスの滑らかさ（noise波形なので分割数を増やして滑らかに）
+
+/*
+  「一つの波の中で大きさがランダムに変化する」「動きもランダムになる」を実現するため、
+  単純なsin波ではなく1次元の値ノイズ(value noise)で波形を生成しています。
+
+  仕組み：
+  1. hash() で位置(整数)ごとに疑似乱数(-1〜1)を作る
+  2. noise1D() で整数点の間をなめらかに補間する（＝ジグザグにならない自然な波）
+  3. fbm() で周波数の違うnoiseを重ねて、細かい揺らぎも混ぜる
+  4. x方向のnoiseで「波の形」を作り、さらに別のnoiseで「その場所ごとの振れ幅」を
+     変化させることで、同じ波の中でも大きい部分/小さい部分ができる
+  5. 時間(time)をnoiseの入力にそのまま流し込むことで、
+     一定周期で繰り返すsin波と違い、動き自体も予測できない自然な揺れ方になる
+*/
+function hash(n) {
+  const s = Math.sin(n) * 43758.5453123;
+  return (s - Math.floor(s)) * 2 - 1; // -1 〜 1
+}
+
+function smoothstep(t) {
+  return t * t * (3 - 2 * t);
+}
+
+function noise1D(x) {
+  const i = Math.floor(x);
+  const f = x - i;
+  const a = hash(i);
+  const b = hash(i + 1);
+  const t = smoothstep(f);
+  return a * (1 - t) + b * t; // -1 〜 1
+}
+
+function fbm(x, octaves = 2) {
+  // オクターブ数を減らし、高周波の細かいノイズを抑えることで
+  // 全体としてなめらかな大きいうねりだけが残るようにする
+  let value = 0;
+  let amp = 1;
+  let freq = 1;
+  let ampSum = 0;
+  for (let o = 0; o < octaves; o++) {
+    value += noise1D(x * freq) * amp;
+    ampSum += amp;
+    amp *= 0.45;
+    freq *= 2.0;
+  }
+  return value / ampSum; // -1 〜 1 に正規化
+}
+
+// 直線でつなぐと折れ線っぽくガタつくため、
+// Catmull-Rom補間でなめらかな曲線（3次ベジェ）に変換してパスを作る
+function pointsToSmoothPath(pts, closeToBottom) {
+  if (pts.length < 2) return '';
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[i + 2] || p2;
+
+    const c1x = p1.x + (p2.x - p0.x) / 6;
+    const c1y = p1.y + (p2.y - p0.y) / 6;
+    const c2x = p2.x - (p3.x - p1.x) / 6;
+    const c2y = p2.y - (p3.y - p1.y) / 6;
+
+    d += ` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+  }
+  if (closeToBottom) {
+    d += ` L${width},${height} L0,${height} Z`;
+  }
+  return d;
+}
+
+function buildWavePath(time, {
+  baseline,       // 波の中心の高さ
+  ampBase,        // 振れ幅の基本値
+  ampVariance,    // その場所ごとに振れ幅がどれだけ変化するか
+  shapeScale,     // 波形の細かさ（大きいほど波が細かくなる）
+  ampScale,       // 振れ幅の変化の細かさ
+  speed,          // 動く速さ（noise空間を進む速さ）
+  seed = 0
+}) {
+  const pts = [];
+  for (let i = 0; i <= points; i++) {
+    const x = (width / points) * i;
+    const localAmp = ampBase + fbm(x * ampScale + seed * 3.1) * ampVariance;
+    const shape = fbm(x * shapeScale + time * speed + seed);
+    pts.push({ x, y: baseline + shape * localAmp });
+  }
+  return pointsToSmoothPath(pts, true);
+}
+
+// 白い線の波は塗りの波と違い、あえて規則正しいsin波にする
+// （noiseを使わず、一定の波長・速さで繰り返す動きにする）
+function buildRegularLinePath(time, {
+  baseline,
+  amplitude,
+  wavelength,
+  speed,
+  phaseOffset = 0
+}) {
+  const pts = [];
+  for (let i = 0; i <= points; i++) {
+    const x = (width / points) * i;
+    const theta = (x / wavelength) * Math.PI * 2 + time * speed + phaseOffset;
+    const y = baseline + Math.sin(theta) * amplitude;
+    pts.push({ x, y });
+  }
+  return pointsToSmoothPath(pts, false);
+}
+
+// 読み込むたびに塗りの波のseedをランダム化 → 波形も動きも毎回変わる
+const seeds = {
+  fill1: Math.random() * 100,
+  fill2: Math.random() * 100,
+  fill3: Math.random() * 100
+};
+
+const fill1 = document.getElementById('waveFill1');
+const fill2 = document.getElementById('waveFill2');
+const fill3 = document.getElementById('waveFill3');
+const line1 = document.getElementById('waveLine1');
+const line2 = document.getElementById('waveLine2');
+
+function animate(t) {
+  const time = t * 0.001;
+
+  fill1.setAttribute('d', buildWavePath(time, {
+    baseline: 190,
+    ampBase: 34, ampVariance: 38,
+    shapeScale: 0.0016, ampScale: 0.0011,
+    speed: 0.15, seed: seeds.fill1
+  }));
+  fill2.setAttribute('d', buildWavePath(time, {
+    baseline: 235,
+    ampBase: 42, ampVariance: 46,
+    shapeScale: 0.0021, ampScale: 0.0014,
+    speed: -0.12, seed: seeds.fill2
+  }));
+  fill3.setAttribute('d', buildWavePath(time, {
+    baseline: 285,
+    ampBase: 28, ampVariance: 32,
+    shapeScale: 0.0013, ampScale: 0.0009,
+    speed: 0.09, seed: seeds.fill3
+  }));
+
+  line1.setAttribute('d', buildRegularLinePath(time, {
+    baseline: 160, amplitude: 26, wavelength: 640, speed: 0.4, phaseOffset: 0.6
+  }));
+  line2.setAttribute('d', buildRegularLinePath(time, {
+    baseline: 205, amplitude: 20, wavelength: 480, speed: -0.32, phaseOffset: 3.1
+  }));
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+</script>
+
+</body>
+</html>
