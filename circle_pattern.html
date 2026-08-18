@@ -45,7 +45,7 @@
 <canvas id="c"></canvas>
 <div class="overlay">
   <h1>つなぐ力が、<br>未来を動かす。</h1>
-  <p>円が静かに重なり、揺らめきながら<br>奥行きのある幾何学模様を描きます。</p>
+  <p>物流を中核に、多様な事業を通じて<br>豊かな地域社会づくりに貢献します。</p>
 </div>
 
 <script>
@@ -111,7 +111,7 @@ const clusters = [
 // Because it's driven by one sin(phase), it always returns to
 // exactly 0 — and the base layout — once per full cycle.
 const LOOP_PERIOD_MS = 18000; // one full cycle, in milliseconds
-const MAX_SWAY = 10 * Math.PI / 180; // how far the group swings, in radians
+const MAX_SWAY = 40 * Math.PI / 180; // how far the group swings, in radians
 
 function draw(t) {
   ctx.clearRect(0, 0, W, H);
@@ -128,7 +128,7 @@ function draw(t) {
     ellipseLayout.forEach((layout, i) => {
       // each ellipse swings by the same sway value, scaled by
       // its own weight — same direction and timing for everyone
-      const weight = 0.6 + i * 0.15;
+      const weight = 0.2 + i * 0.15;
       const swayAngle = sway * MAX_SWAY * weight;
 
       // rotate this ellipse's base offset around the cluster
