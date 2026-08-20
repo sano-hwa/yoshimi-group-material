@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>吉見グループ サイトリニューアル｜ファーストビュー案 比較</title>
+<title>吉見グループ サイト制作｜ファーストビュー案 比較</title>
 <style>
   :root{
     --navy:#0f2a4a;
@@ -91,6 +91,7 @@
     border-bottom:1px solid var(--line);
     padding:10px 32px;
     display:flex;gap:6px;
+    justify-content: center;
     overflow-x:auto;
     font-size:13px;
   }
@@ -128,13 +129,25 @@
     overflow:hidden;
     display:flex;flex-direction:column;
     transition:box-shadow .2s ease, transform .2s ease;
+    text-decoration:none;
+    color:inherit;
+    cursor:pointer;
   }
   .motion-card:hover{box-shadow:0 12px 28px rgba(15,42,74,0.12);transform:translateY(-2px);}
+  .motion-card:hover .motion-link{text-decoration:underline;}
   .motion-frame-wrap{
     position:relative;
     aspect-ratio:16/10;
     background:#0c1c30;
     border-bottom:1px solid var(--line);
+  }
+  .motion-frame-overlay {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
   .motion-frame-wrap iframe{
     width:100%;height:100%;border:0;display:block;
@@ -232,57 +245,13 @@
 </header>
 
 <nav class="jump">
-  <a href="#motion">動きのイメージ</a>
   <a href="#proposals">ファーストビュー案</a>
-  <a href="#p1">案1</a><a href="#p2">案2</a><a href="#p3">案3</a><a href="#p4">案4</a>
-  <a href="#p5">案5</a><a href="#p6">案6</a><a href="#p7">案7</a>
+  <a href="#motion">動きのイメージ</a>
 </nav>
 
 <main>
 
-  <section class="block" id="motion">
-    <div class="block-head">
-      <div class="block-num">MOTION REFERENCE</div>
-      <h2 class="block-title">エレメントの動きのイメージ</h2>
-      <p class="block-sub">ファーストビュー内で使用予定の背景・装飾エレメントの動きを、実際に触って確認できるデモページです。プレビューをクリック、またはリンクから別タブで開けます。</p>
-    </div>
-    <div class="motion-grid">
 
-      <div class="motion-card">
-        <div class="motion-frame-wrap">
-          <iframe src="https://sano-hwa.github.io/yoshimi-group-material/circle_pattern.html" loading="lazy" title="circle pattern demo"></iframe>
-        </div>
-        <div class="motion-body">
-          <p class="motion-name">Circle Pattern</p>
-          <p class="motion-desc">同心円の点線パターンを配置した静的〜微動の背景バリエーション。</p>
-          <a class="motion-link" href="https://sano-hwa.github.io/yoshimi-group-material/circle_pattern.html" target="_blank" rel="noopener">別タブで開く</a>
-        </div>
-      </div>
-
-      <div class="motion-card">
-        <div class="motion-frame-wrap">
-          <iframe src="https://sano-hwa.github.io/yoshimi-group-material/circle_rotate/" loading="lazy" title="circle rotate demo"></iframe>
-        </div>
-        <div class="motion-body">
-          <p class="motion-name">Circle Rotate</p>
-          <p class="motion-desc">同心円が緩やかに回転し続けるアニメーション。ファーストビューに動きと奥行きを加える案。</p>
-          <a class="motion-link" href="https://sano-hwa.github.io/yoshimi-group-material/circle_rotate/" target="_blank" rel="noopener">別タブで開く</a>
-        </div>
-      </div>
-
-      <div class="motion-card">
-        <div class="motion-frame-wrap">
-          <iframe src="https://sano-hwa.github.io/yoshimi-group-material/wave-demo/" loading="lazy" title="wave demo"></iframe>
-        </div>
-        <div class="motion-body">
-          <p class="motion-name">Wave Demo</p>
-          <p class="motion-desc">波状のラインが揺らぐアニメーション表現。</p>
-          <a class="motion-link" href="https://sano-hwa.github.io/yoshimi-group-material/wave-demo/" target="_blank" rel="noopener">別タブで開く</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <section class="block" id="proposals">
     <div class="block-head">
@@ -305,7 +274,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案1</span>
           <img class="img-closed" src="img/01/close.jpg" alt="案1 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/01/open.jpg" alt="案1 ナビゲーションオープン状態">
         </div>
@@ -324,7 +292,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案2</span>
           <img class="img-closed" src="img/02/close.jpg" alt="案2 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/02/open.jpg" alt="案2 ナビゲーションオープン状態">
         </div>
@@ -343,7 +310,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案3</span>
           <img class="img-closed" src="img/03/close.jpg" alt="案3 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/03/open.jpg" alt="案3 ナビゲーションオープン状態">
         </div>
@@ -362,7 +328,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案4</span>
           <img class="img-closed" src="img/04/close.jpg" alt="案4 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/04/open.jpg" alt="案4 ナビゲーションオープン状態">
         </div>
@@ -381,7 +346,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案5</span>
           <img class="img-closed" src="img/05/close.jpg" alt="案5 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/05/open.jpg" alt="案5 ナビゲーションオープン状態">
         </div>
@@ -400,7 +364,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案6</span>
           <img class="img-closed" src="img/06/close.jpg" alt="案6 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/06/open.jpg" alt="案6 ナビゲーションオープン状態">
         </div>
@@ -419,7 +382,6 @@
           </div>
         </div>
         <div class="proposal-img-wrap">
-          <span class="state-badge">案7</span>
           <img class="img-closed" src="img/07/close.jpg" alt="案7 ナビゲーションクローズ状態">
           <img class="img-open hidden" src="img/07/open.jpg" alt="案7 ナビゲーションオープン状態">
         </div>
@@ -428,6 +390,52 @@
     </div>
   </section>
 
+  <section class="block" id="motion">
+    <div class="block-head">
+      <div class="block-num">MOTION REFERENCE</div>
+      <h2 class="block-title">エレメントの動きのイメージ</h2>
+      <p class="block-sub">ファーストビュー内で使用予定の背景・装飾エレメントの動きを、実際に触って確認できるデモページです。プレビューをクリック、またはリンクから別タブで開けます。</p>
+    </div>
+    <div class="motion-grid">
+
+      <a class="motion-card" href="https://sano-hwa.github.io/yoshimi-group-material/circle_pattern.html" target="_blank">
+        <div class="motion-frame-wrap">
+          <div class="motion-frame-overlay"></div>
+          <iframe src="https://sano-hwa.github.io/yoshimi-group-material/circle_pattern.html" loading="lazy" title="circle pattern demo"></iframe>
+        </div>
+        <div class="motion-body">
+          <p class="motion-name">Circle Pattern</p>
+          <p class="motion-desc">同心円の点線パターンを配置した静的〜微動の背景バリエーション。</p>
+          <p class="motion-link">別タブで開く</p>
+        </div>
+      </a>
+
+      <a class="motion-card" href="https://sano-hwa.github.io/yoshimi-group-material/circle_rotate/" target="_blank">
+        <div class="motion-frame-wrap">
+          <div class="motion-frame-overlay"></div>
+          <iframe src="https://sano-hwa.github.io/yoshimi-group-material/circle_rotate/" loading="lazy" title="circle rotate demo"></iframe>
+        </div>
+        <div class="motion-body">
+          <p class="motion-name">Circle Rotate</p>
+          <p class="motion-desc">同心円が緩やかに回転し続けるアニメーション。ファーストビューに動きと奥行きを加える案。</p>
+          <p class="motion-link">別タブで開く</p>
+        </div>
+      </a>
+
+      <a class="motion-card" href="https://sano-hwa.github.io/yoshimi-group-material/wave-demo/" target="_blank">
+        <div class="motion-frame-wrap">
+          <div class="motion-frame-overlay"></div>
+          <iframe src="https://sano-hwa.github.io/yoshimi-group-material/wave-demo/" loading="lazy" title="wave demo"></iframe>
+        </div>
+        <div class="motion-body">
+          <p class="motion-name">Wave Demo</p>
+          <p class="motion-desc">波状のラインが揺らぐアニメーション表現。</p>
+          <p class="motion-link">別タブで開く</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
 </main>
 
 <footer>
