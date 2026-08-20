@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>円の動き デモ | 吉見グループ株式会社</title>
+<style>
+  :root{
+    --navy-900:#0b2f4f;
+    --navy-800:#123a5e;
+    --blue-600:#1c5f96;
+    --blue-400:#4f8fc0;
+    --blue-200:#9fcbf5;
+    --ink-white:#ffffff;
+    --duration-base:1;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0;
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+    background:#0a2540;
+    color:#fff;
+  }
+
+  /* ---------- Navbar ---------- */
+  .navbar{
+    position:absolute; top:0; left:0; right:0; z-index:30;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px;
+  }
+  .navbar .logo-block{
+    background:#fff; color:#123a5e;
+    padding:10px 22px; border-radius:6px;
+    display:flex; flex-direction:column; line-height:1.25;
+  }
+  .navbar .logo-block .en{ font-size:11px; font-weight:700; letter-spacing:.08em; color:#1c5f96; }
+  .navbar .logo-block .jp{ font-size:17px; font-weight:800; }
+  .navbar nav{
+    display:flex; align-items:center; gap:28px;
+    background:rgba(255,255,255,0.14);
+    backdrop-filter:blur(6px);
+    padding:14px 26px; border-radius:8px;
+  }
+  .navbar nav a{
+    color:#fff; text-decoration:none; font-size:14px; font-weight:600; letter-spacing:.02em;
+    white-space:nowrap;
+  }
+  .navbar nav .menu-btn{
+    background:#123a5e; padding:8px 18px; border-radius:4px; font-weight:700;
+  }
+  @media (max-width:900px){
+    .navbar nav a:not(.menu-btn){ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    min-height:640px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 78% 15%, rgba(255,255,255,0.18), transparent 45%),
+      linear-gradient(155deg,#4c8ec4 0%, #2c6ba0 32%, #16436e 62%, #0b2c4a 100%);
+  }
+  .hero-shade{
+    position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(4,20,36,0.55) 0%, rgba(4,20,36,0.05) 45%);
+    z-index:5;
+    pointer-events:none;
+  }
+
+  /* ---------- Rotating circle field ---------- */
+  .circle-field{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:1px; height:1px;
+    z-index:2;
+    will-change:transform;
+  }
+  .ring-anchor{
+    position:absolute;
+    left:0; top:0;
+    transform:translate(-50%,-50%);
+  }
+  .ring-rotate{
+    width:100%; height:100%;
+    transform-origin:50% 50%;
+    will-change:transform;
+  }
+  .ring-rotate img{
+    display:block;
+    width:100%; height:auto;
+    opacity:0.9;
+  }
+
+  /* ---------- Hero content ---------- */
+  .hero-content{
+    position:relative; z-index:10;
+    height:100%;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:0 8% 6% 8%;
+  }
+  .hero-content h1{
+    font-size:clamp(32px, 5.4vw, 64px);
+    line-height:1.35;
+    font-weight:800;
+    margin:0 0 22px 0;
+    letter-spacing:.02em;
+    text-shadow:0 4px 18px rgba(0,0,0,0.25);
+  }
+  .hero-content p{
+    font-size:clamp(14px, 1.4vw, 17px);
+    line-height:1.9;
+    font-weight:500;
+    color:#eaf3fb;
+    margin:0;
+    text-shadow:0 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .anniversary{
+    position:absolute; right:6%; bottom:6%; z-index:10;
+    background:#fff; color:#123a5e;
+    padding:16px 22px; border-radius:8px;
+    font-size:12px; text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+  }
+  .anniversary .big{ font-size:26px; font-weight:800; color:#1c5f96; }
+  @media (max-width:700px){ .anniversary{ display:none; } }
+
+  /* ---------- Control panel ---------- */
+  .demo-panel{
+    position:fixed; right:20px; bottom:20px; z-index:100;
+    width:280px;
+    background:rgba(11,47,79,0.92);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:12px;
+    padding:18px 20px 20px;
+    font-size:13px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.35);
+  }
+  .demo-panel h2{
+    font-size:13px; margin:0 0 12px 0; font-weight:700;
+    display:flex; align-items:center; gap:8px;
+    color:#9fcbf5;
+    letter-spacing:.04em;
+  }
+  .demo-panel h2::before{
+    content:""; width:7px; height:7px; border-radius:50%;
+    background:#4fd1a5; display:inline-block;
+    animation:blink 1.6s infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+  .panel-row{ margin-bottom:14px; }
+  .panel-row:last-child{ margin-bottom:0; }
+  .panel-row label{
+    display:flex; justify-content:space-between; align-items:center;
+    color:#dcebf7; margin-bottom:6px; font-size:12.5px;
+  }
+  .panel-row input[type=range]{
+    width:100%; accent-color:#4f8fc0;
+  }
+  .toggle-row{
+    display:flex; justify-content:space-between; align-items:center;
+    color:#dcebf7;
+  }
+  .switch{
+    position:relative; width:40px; height:22px; flex-shrink:0;
+  }
+  .switch input{ opacity:0; width:0; height:0; }
+  .slider-el{
+    position:absolute; cursor:pointer; inset:0;
+    background:rgba(255,255,255,0.25); border-radius:20px; transition:.2s;
+  }
+  .slider-el::before{
+    content:""; position:absolute; width:16px; height:16px; left:3px; top:3px;
+    background:#fff; border-radius:50%; transition:.2s;
+  }
+  .switch input:checked + .slider-el{ background:#4f8fc0; }
+  .switch input:checked + .slider-el::before{ transform:translateX(18px); }
+  .demo-note{
+    margin-top:14px; padding-top:12px;
+    border-top:1px solid rgba(255,255,255,0.14);
+    color:#a9c3d8; font-size:11px; line-height:1.6;
+  }
+  .panel-toggle-btn{
+    position:fixed; right:20px; bottom:20px; z-index:99;
+    background:#123a5e; color:#fff; border:none;
+    padding:10px 16px; border-radius:24px; font-size:12px; font-weight:700;
+    cursor:pointer; display:none;
+    box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  /* ---------- Explainer section below hero ---------- */
+  .explainer{
+    max-width:780px; margin:0 auto; padding:80px 24px 120px;
+    color:#dbe7f2;
+  }
+  .explainer h2{
+    font-size:22px; color:#fff; margin-bottom:14px;
+  }
+  .explainer p{
+    font-size:14px; line-height:1.9; margin:0 0 12px;
+  }
+  .explainer code{
+    background:rgba(255,255,255,0.08);
+    padding:2px 6px; border-radius:4px; font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero" id="hero">
+    <div class="hero-shade"></div>
+
+    <div class="circle-field" id="circleField">
+      <div class="ring-anchor" data-size="752"><div class="ring-rotate"><img src="circle_01.svg" alt=""></div></div>
+      <div class="ring-anchor" data-size="958"><div class="ring-rotate"><img src="circle_02.svg" alt=""></div></div>
+      <div class="ring-anchor" data-size="1223"><div class="ring-rotate"><img src="circle_03.svg" alt=""></div></div>
+      <div class="ring-anchor" data-size="1354"><div class="ring-rotate"><img src="circle_04.svg" alt=""></div></div>
+      <div class="ring-anchor" data-size="1500"><div class="ring-rotate"><img src="circle_05.svg" alt=""></div></div>
+    </div>
+
+    <header class="navbar">
+      <div class="logo-block">
+        <span class="en">YOSHIMI GROUP</span>
+        <span class="jp">吉見グループ株式会社</span>
+      </div>
+      <nav>
+        <a href="#">吉見グループについて</a>
+        <a href="#">グループ会社</a>
+        <a href="#">企業情報</a>
+        <a href="#">地域の皆様へ</a>
+        <a href="#">お問い合わせ</a>
+        <a href="#" class="menu-btn">MENU</a>
+      </nav>
+    </header>
+
+    <div class="hero-content">
+      <h1>つなぐ力が、<br>未来を動かす。</h1>
+      <p>物流を中核に、多様な事業を通じて<br>豊かな地域社会づくりに貢献します。</p>
+    </div>
+
+    <div class="anniversary">
+      <div class="big">100<sup style="font-size:12px;">TH</sup></div>
+      <div>100年の歩みと、その先へ</div>
+    </div>
+  </section>
+
+  <div class="demo-panel" id="demoPanel">
+    <h2>動きコントロール（確認用）</h2>
+
+    <div class="panel-row">
+      <label><span>回転スピード</span><span id="speedVal">1.0x</span></label>
+      <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1">
+    </div>
+
+    <div class="panel-row toggle-row">
+      <span>自動回転</span>
+      <label class="switch">
+        <input type="checkbox" id="playToggle" checked>
+        <span class="slider-el"></span>
+      </label>
+    </div>
+
+    <div class="panel-row toggle-row" style="margin-bottom:0;">
+      <span>マウス追従（視差）</span>
+      <label class="switch">
+        <input type="checkbox" id="mouseToggle" checked>
+        <span class="slider-el"></span>
+      </label>
+    </div>
+
+    <div class="demo-note">
+      各リングは異なる速度・向きでゆっくり回転しています。スライダーで速度を、トグルでマウス追従のON・OFFを切り替えて動きのイメージをご確認ください。
+    </div>
+  </div>
+  <button class="panel-toggle-btn" id="panelToggleBtn">動きの設定 ▲</button>
+
+  <section class="explainer">
+    <h2>このデモについて</h2>
+    <p>吉見グループ様サイトのファーストビューに配置する、複数の円が緩やかに回転しながら重なり合う演出のデモです。5つの円素材（<code>circle_01.svg</code>〜<code>circle_05.svg</code>）を同心円状に重ね、それぞれ異なる速度・回転方向でループさせています。</p>
+    <p>右下のパネルから回転速度の変更、マウス追従（視差効果）のON/OFF切り替えができます。実装時はこの設定値をもとに、本番用の背景写真と組み合わせて最終調整を行います。</p>
+  </section>
+
+<script>
+(function(){
+  const rings = Array.from(document.querySelectorAll('.ring-anchor')).map((anchor, i) => {
+    const size = parseFloat(anchor.dataset.size);
+    anchor.style.width = size + 'px';
+    anchor.style.height = size + 'px';
+    return {
+      rotateEl: anchor.querySelector('.ring-rotate'),
+      angle: (i * 37) % 360,
+      // deg/sec base speed, alternating direction, slower for bigger rings
+      speed: 10 - i * 0.45,
+      dir: (i % 2 === 0) ? 1 : -1
+    };
+  });
+
+  const field = document.getElementById('circleField');
+  const hero = document.getElementById('hero');
+
+  let speedMultiplier = 1;
+  let playing = true;
+  let mouseEnabled = true;
+
+  let mouseX = 0, mouseY = 0;       // target
+  let smoothX = 0, smoothY = 0;     // eased
+
+  let lastTime = performance.now();
+
+  function loop(now){
+    const dt = Math.min(now - lastTime, 50) / 1000;
+    lastTime = now;
+
+    if(playing){
+      rings.forEach(r => {
+        r.angle += r.speed * r.dir * speedMultiplier * dt;
+        r.rotateEl.style.transform = 'rotate(' + r.angle + 'deg)';
+      });
+    }
+
+    // ease mouse parallax
+    smoothX += (mouseX - smoothX) * 0.06;
+    smoothY += (mouseY - smoothY) * 0.06;
+
+    const parallaxX = mouseEnabled ? smoothX : 0;
+    const parallaxY = mouseEnabled ? smoothY : 0;
+
+    field.style.transform = 'translate(-50%,-50%) translate(' + parallaxX + 'px,' + parallaxY + 'px)';
+
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width - 0.5;
+    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX = relX * 30;
+    mouseY = relY * 30;
+  });
+  hero.addEventListener('mouseleave', () => { mouseX = 0; mouseY = 0; });
+
+  // ---- controls ----
+  const speedSlider = document.getElementById('speedSlider');
+  const speedVal = document.getElementById('speedVal');
+  speedSlider.addEventListener('input', () => {
+    speedMultiplier = parseFloat(speedSlider.value);
+    speedVal.textContent = speedMultiplier.toFixed(1) + 'x';
+  });
+
+  document.getElementById('playToggle').addEventListener('change', (e) => {
+    playing = e.target.checked;
+  });
+  document.getElementById('mouseToggle').addEventListener('change', (e) => {
+    mouseEnabled = e.target.checked;
+  });
+
+  // ---- responsive panel collapse ----
+  const panel = document.getElementById('demoPanel');
+  const panelBtn = document.getElementById('panelToggleBtn');
+  function checkWidth(){
+    if(window.innerWidth < 640){
+      panel.style.display = 'none';
+      panelBtn.style.display = 'block';
+    } else {
+      panel.style.display = 'block';
+      panelBtn.style.display = 'none';
+    }
+  }
+  panelBtn.addEventListener('click', () => {
+    const showing = panel.style.display === 'block';
+    panel.style.display = showing ? 'none' : 'block';
+    panelBtn.textContent = showing ? '動きの設定 ▲' : '動きの設定 ▼';
+  });
+  window.addEventListener('resize', checkWidth);
+  checkWidth();
+})();
+</script>
+
+</body>
+</html>
