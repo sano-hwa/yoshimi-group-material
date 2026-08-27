@@ -162,6 +162,141 @@
     font-size: 11.5px;
     color: var(--sub);
   }
+
+  .section-divider {
+    margin: 64px 0 36px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .section-divider h2 {
+    font-size: clamp(19px, 2.4vw, 24px);
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .section-divider .lead {
+    max-width: 680px;
+  }
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 820px) {
+    .icon-grid { grid-template-columns: 1fr; }
+  }
+  .icon-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .icon-card .card-head {
+    width: 100%;
+    margin-bottom: 14px;
+  }
+  .icon-card .tag {
+    color: var(--ink);
+  }
+  .icon-card .tag .dot { background: #4a9c8f; }
+  .icon-stage {
+    width: 100%;
+    aspect-ratio: 601 / 581;
+    background: #f3f5f7;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    cursor: zoom-in;
+    transition: background 0.2s ease;
+  }
+  .icon-stage:hover {
+    background: #ebeef1;
+  }
+  .icon-stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 22, 26, 0.82);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 40px;
+    cursor: zoom-out;
+  }
+  .lightbox.open {
+    display: flex;
+  }
+  .lightbox-inner {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: min(1000px, 90vw);
+    width: 90%;
+    max-height: 85vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+  }
+  .lightbox-inner img {
+    width: 100%;
+    max-width: 800px;
+    object-fit: contain;
+  }
+  .lightbox-label {
+    margin-top: 18px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lightbox-label .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #4a9c8f;
+  }
+  .lightbox-file {
+    margin-top: 4px;
+    font-size: 11.5px;
+    color: var(--sub);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 28px;
+    right: 32px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .lightbox-close:hover {
+    background: rgba(255,255,255,0.22);
+  }
 </style>
 </head>
 <body>
@@ -204,7 +339,55 @@
     </div>
   </div>
 
+  <div class="section-divider">
+    <div class="eyebrow">Icon Review</div>
+    <h2>事業内容アイコン比較</h2>
+    <p class="lead">「物流事業」アイコンの3案です。円の中でどう見えるかを含めて比較検討してください。<br>
+    アイコンはクリックして拡大表示できます。</p>
+  </div>
+
+  <div class="icon-grid">
+    <div class="icon-card">
+      <div class="card-head">
+        <span class="tag"><span class="dot"></span>案1</span>
+      </div>
+      <div class="icon-stage" data-src="images/image1.svg" data-label="案1" data-file="image1.svg">
+        <img src="images/image1.svg" alt="事業内容アイコン 案1">
+      </div>
+      <p class="caption">image1.svg</p>
+    </div>
+
+    <div class="icon-card">
+      <div class="card-head">
+        <span class="tag"><span class="dot"></span>案2</span>
+      </div>
+      <div class="icon-stage" data-src="images/image2.svg" data-label="案2" data-file="image2.svg">
+        <img src="images/image2.svg" alt="事業内容アイコン 案2">
+      </div>
+      <p class="caption">image2.svg</p>
+    </div>
+
+    <div class="icon-card">
+      <div class="card-head">
+        <span class="tag"><span class="dot"></span>案3</span>
+      </div>
+      <div class="icon-stage" data-src="images/image3.svg" data-label="案3" data-file="image3.svg">
+        <img src="images/image3.svg" alt="事業内容アイコン 案3">
+      </div>
+      <p class="caption">image3.svg</p>
+    </div>
+  </div>
+
   <footer>作成日: 2026年8月27日　※画像はデザイン検討用の仮データを含みます。</footer>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="閉じる">✕</button>
+  <div class="lightbox-inner">
+    <img id="lightboxImg" src="" alt="拡大表示">
+    <div class="lightbox-label"><span class="dot"></span><span id="lightboxLabel"></span></div>
+    <div class="lightbox-file" id="lightboxFile"></div>
+  </div>
 </div>
 
 <script>
@@ -215,6 +398,37 @@
     el.addEventListener('scroll', function() {
       hint.classList.add('hidden');
     }, { once: true });
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxLabel = document.getElementById('lightboxLabel');
+  var lightboxFile = document.getElementById('lightboxFile');
+  var lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, label, file) {
+    lightboxImg.src = src;
+    lightboxLabel.textContent = label;
+    lightboxFile.textContent = file;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('.icon-stage').forEach(function(stage) {
+    stage.addEventListener('click', function() {
+      openLightbox(stage.dataset.src, stage.dataset.label, stage.dataset.file);
+    });
+  });
+
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
   });
 </script>
 </body>
