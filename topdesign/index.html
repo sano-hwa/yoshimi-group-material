@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>トップページデザイン案 比較</title>
+<style>
+  :root {
+    --bg: #eef0f3;
+    --ink: #1c2024;
+    --sub: #6b7280;
+    --line: #dde1e6;
+    --accent-a: #2f6fed;
+    --accent-b: #e05d38;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+  header.top {
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--sub);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .lead {
+    font-size: 14.5px;
+    color: var(--sub);
+    line-height: 1.8;
+    max-width: 680px;
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 24px 28px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+  .tag.a .dot { background: var(--accent-a); }
+  .tag.b .dot { background: var(--accent-b); }
+  .filename {
+    font-size: 11.5px;
+    color: var(--sub);
+    font-variant-numeric: tabular-nums;
+  }
+  .mock-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    aspect-ratio: 2170 / 1430;
+  }
+  .mock-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .screen {
+    position: absolute;
+    left: 10.23%;
+    top: 13.22%;
+    width: 79.49%;
+    height: 75.80%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: #fff;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 2px;
+  }
+  .screen::-webkit-scrollbar {
+    width: 8px;
+  }
+  .screen::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 8px;
+  }
+  .screen img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .scroll-hint {
+    position: absolute;
+    right: calc(10.23% + 14px);
+    bottom: calc(24.2% + 14px);
+    z-index: 4;
+    background: rgba(28,32,36,0.82);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    padding: 6px 10px;
+    border-radius: 999px;
+    pointer-events: none;
+    opacity: 0.9;
+    transition: opacity 0.4s ease;
+  }
+  .scroll-hint.hidden { opacity: 0; }
+  .caption {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: var(--sub);
+    line-height: 1.7;
+  }
+  footer {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 11.5px;
+    color: var(--sub);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="eyebrow">Design Review</div>
+    <h1>トップページ デザイン案 比較</h1>
+    <p class="lead">2つのデザイン案をパソコン画面の枠内でご確認いただけます。各画面はマウスホイールまたはドラッグでスクロールできます。実際のブラウザでの見え方に近い形でご確認ください。</p>
+  </header>
+
+  <div class="stack">
+    <div class="card">
+      <div class="card-head">
+        <span class="tag a"><span class="dot"></span>案A</span>
+        <span class="filename">TOP1</span>
+      </div>
+      <div class="mock-wrap">
+        <div class="screen" id="screenA">
+          <img src="images/top1.jpg" alt="デザイン案A トップページ">
+        </div>
+        <img class="mock-frame" src="images/macbook.png" alt="">
+        <div class="scroll-hint" id="hintA">スクロールできます ↕</div>
+      </div>
+      <p class="caption">案A：ロゴ・ナビゲーションを含むフルサイズのヒーロービジュアルを採用したレイアウト。</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="tag b"><span class="dot"></span>案B</span>
+        <span class="filename">TOP2</span>
+      </div>
+      <div class="mock-wrap">
+        <div class="screen" id="screenB">
+          <img src="images/top2.jpg" alt="デザイン案B トップページ">
+        </div>
+        <img class="mock-frame" src="images/macbook.png" alt="">
+        <div class="scroll-hint" id="hintB">スクロールできます ↕</div>
+      </div>
+      <p class="caption">案B：地図イラストや代表者ビジュアルを取り入れた企業情報セクションを含むレイアウト。</p>
+    </div>
+  </div>
+
+  <footer>作成日: 2026年8月27日　※画像はデザイン検討用の仮データを含みます。</footer>
+</div>
+
+<script>
+  ['A','B'].forEach(function(key) {
+    var el = document.getElementById('screen' + key);
+    var hint = document.getElementById('hint' + key);
+    if (!el) return;
+    el.addEventListener('scroll', function() {
+      hint.classList.add('hidden');
+    }, { once: true });
+  });
+</script>
+</body>
+</html>
