@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吉見グループ株式会社 コーポレートサイト デザイン比較</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171b20;
+    --canvas:#e9edf1;
+    --panel:#ffffff;
+    --line:#d6dce2;
+    --line-soft:#e4e8ec;
+    --muted:#68727c;
+    --navy:#28527e;
+    --navy-deep:#173151;
+    --teal:#4d8a8f;
+    --tag-a:#28527e;
+    --tag-b:#b4703c;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:"Zen Kaku Gothic New","Inter",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- header ---------- */
+  header.tool-header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--navy-deep);
+    color:#fff;
+    border-bottom:1px solid #0f2136;
+  }
+  .header-inner{
+    max-width:1440px;
+    margin:0 auto;
+    padding:18px 32px 0;
+  }
+  .brand-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px 24px;
+    padding-bottom:16px;
+  }
+  .brand-row h1{
+    font-size:16px;
+    font-weight:700;
+    margin:0;
+    letter-spacing:.02em;
+  }
+  .brand-row .sub{
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:#9fb2c6;
+    text-transform:uppercase;
+  }
+  nav.tabs{
+    display:flex;
+    gap:2px;
+    overflow-x:auto;
+  }
+  nav.tabs button{
+    appearance:none;
+    border:none;
+    background:transparent;
+    color:#b7c5d4;
+    font-family:inherit;
+    font-size:14px;
+    font-weight:500;
+    padding:12px 20px 13px;
+    cursor:pointer;
+    white-space:nowrap;
+    border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  nav.tabs button .en{
+    display:block;
+    font-family:"Inter",sans-serif;
+    font-size:10px;
+    letter-spacing:.09em;
+    color:#7286a0;
+    margin-bottom:2px;
+    text-transform:uppercase;
+  }
+  nav.tabs button:hover{color:#fff;}
+  nav.tabs button.active{
+    color:#fff;
+    border-bottom-color:#e8b876;
+  }
+  nav.tabs button.active .en{color:#e8b876;}
+
+  /* ---------- layout ---------- */
+  main{
+    max-width:1440px;
+    margin:0 auto;
+    padding:28px 32px 80px;
+  }
+  section.panel-view{display:none;}
+  section.panel-view.active{display:block;}
+
+  .view-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:18px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .view-head h2{
+    font-size:22px;
+    margin:0 0 4px;
+    font-weight:700;
+  }
+  .view-head p{
+    margin:0;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  .controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .seg{
+    display:flex;
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .seg button{
+    appearance:none;
+    border:none;
+    background:transparent;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:500;
+    padding:8px 16px;
+    cursor:pointer;
+    color:var(--muted);
+    border-left:1px solid var(--line);
+  }
+  .seg button:first-child{border-left:none;}
+  .seg button.active{
+    background:var(--navy);
+    color:#fff;
+  }
+  .sync-toggle{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:12.5px;
+    color:var(--muted);
+    cursor:pointer;
+    user-select:none;
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:8px 12px;
+    border-radius:3px;
+  }
+  .sync-toggle input{margin:0;accent-color:var(--navy);}
+
+  /* ---------- compare grid ---------- */
+  .compare-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .compare-card{
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+  }
+  .card-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 16px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .tag{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Inter",sans-serif;
+    font-size:12px;
+    font-weight:700;
+    color:#fff;
+    flex-shrink:0;
+  }
+  .tag.a{background:var(--tag-a);}
+  .tag.b{background:var(--tag-b);}
+  .card-head .titles{flex:1;min-width:0;}
+  .card-head .titles .t1{
+    font-size:14px;
+    font-weight:700;
+    line-height:1.3;
+  }
+  .card-head .titles .t2{
+    font-size:11px;
+    color:var(--muted);
+    font-family:"Inter",sans-serif;
+    letter-spacing:.02em;
+  }
+  .card-head a.open-orig{
+    font-size:11px;
+    color:var(--navy);
+    text-decoration:none;
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:3px;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .card-head a.open-orig:hover{background:var(--line-soft);}
+
+  .img-frame{
+    position:relative;
+    height:74vh;
+    overflow-y:auto;
+    background:#f4f5f7;
+    scrollbar-width:thin;
+  }
+  .img-frame::-webkit-scrollbar{width:9px;}
+  .img-frame::-webkit-scrollbar-track{background:#eceef0;}
+  .img-frame::-webkit-scrollbar-thumb{background:#c3cad1;border-radius:5px;}
+
+  .img-frame img{
+    display:block;
+    width:100%;
+    height:auto;
+    cursor:zoom-in;
+  }
+
+  /* ---------- notes ---------- */
+  .note{
+    margin-top:16px;
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(10,14,18,.92);
+    z-index:200;
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    overflow-y:auto;
+    padding:40px 20px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:1100px;
+    width:100%;
+    height:auto;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  .lightbox-close{
+    position:fixed;
+    top:20px;
+    right:28px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.25);
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    z-index:210;
+  }
+
+  @media (max-width:880px){
+    .compare-grid{grid-template-columns:1fr;}
+    .img-frame{height:60vh;}
+    .header-inner{padding:14px 16px 0;}
+    main{padding:20px 16px 60px;}
+    .view-head{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header class="tool-header">
+  <div class="header-inner">
+    <div class="brand-row">
+      <div>
+        <div class="sub">Design Review Tool</div>
+        <h1>吉見グループ株式会社 コーポレートサイト デザイン比較</h1>
+      </div>
+      <div class="sub" id="page-count-label">4 ページ種 / 全10案</div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="active" data-target="view-top"><span class="en">Top Page</span>トップページ</button>
+      <button data-target="view-company"><span class="en">Company</span>企業情報</button>
+      <button data-target="view-business"><span class="en">Business &amp; Group</span>事業とグループ企業</button>
+      <button data-target="view-about"><span class="en">About Us</span>吉見グループについて</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===================== TOP ===================== -->
+  <section class="panel-view active" id="view-top">
+    <div class="view-head">
+      <div>
+        <h2>トップページ — 2案</h2>
+        <p>ヒーロー以下、事業紹介の見せ方が異なる2パターンです。スクロールして下部まで比較してください。</p>
+      </div>
+      <div class="controls">
+        <label class="sync-toggle">
+          <input type="checkbox" class="sync-check" data-group="top" checked>
+          スクロール連動
+        </label>
+      </div>
+    </div>
+    <div class="compare-grid sync-group" data-group="top">
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag a">A</span>
+          <div class="titles">
+            <div class="t1">TOP 案1</div>
+            <div class="t2">Pattern A — Circular business diagram</div>
+          </div>
+          <a class="open-orig" href="images/top1.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/top1.jpg" alt="トップページ 案1" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag b">B</span>
+          <div class="titles">
+            <div class="t1">TOP 案2</div>
+            <div class="t2">Pattern B — Photo gallery layout</div>
+          </div>
+          <a class="open-orig" href="images/top2.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/top2.jpg" alt="トップページ 案2" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <p class="note">画像クリックで原寸表示（ライトボックス）。「原寸を開く」で別タブに元画像を表示します。</p>
+  </section>
+
+  <!-- ===================== COMPANY ===================== -->
+  <section class="panel-view" id="view-company">
+    <div class="view-head">
+      <div>
+        <h2>企業情報 — 背景2種</h2>
+        <p>会社概要・アクセス・グループ会社一覧の下層ページです。背景色のみが異なる2パターンを比較できます。</p>
+      </div>
+      <div class="controls">
+        <label class="sync-toggle">
+          <input type="checkbox" class="sync-check" data-group="company" checked>
+          スクロール連動
+        </label>
+      </div>
+    </div>
+    <div class="compare-grid sync-group" data-group="company">
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag a">A</span>
+          <div class="titles">
+            <div class="t1">企業情報 — グレー背景</div>
+            <div class="t2">Gray background</div>
+          </div>
+          <a class="open-orig" href="images/gray_company.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/gray_company.jpg" alt="企業情報 グレー背景" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag b">B</span>
+          <div class="titles">
+            <div class="t1">企業情報 — 白背景</div>
+            <div class="t2">White background</div>
+          </div>
+          <a class="open-orig" href="images/white_company.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/white_company.jpg" alt="企業情報 白背景" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BUSINESS & GROUP ===================== -->
+  <section class="panel-view" id="view-business">
+    <div class="view-head">
+      <div>
+        <h2>事業とグループ企業 — レイアウト2案 × 背景2種</h2>
+        <p>左サイドナビ型（レイアウト1）とタブ+カード型（レイアウト2）を比較できます。背景色は下のスイッチで切り替えてください。</p>
+      </div>
+      <div class="controls">
+        <div class="seg" id="business-layout-seg">
+          <button class="active" data-layout="1">レイアウト1（左サイドナビ）</button>
+          <button data-layout="2">レイアウト2（タブ+カード）</button>
+        </div>
+        <label class="sync-toggle">
+          <input type="checkbox" class="sync-check" data-group="business" checked>
+          スクロール連動
+        </label>
+      </div>
+    </div>
+    <div class="compare-grid sync-group" data-group="business">
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag a">A</span>
+          <div class="titles">
+            <div class="t1">グレー背景</div>
+            <div class="t2" id="business-a-label">Gray background</div>
+          </div>
+          <a class="open-orig" id="business-a-link" href="images/gray_business1.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img id="business-a-img" src="images/gray_business1.jpg" alt="事業とグループ企業 グレー背景" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag b">B</span>
+          <div class="titles">
+            <div class="t1">白背景</div>
+            <div class="t2" id="business-b-label">White background</div>
+          </div>
+          <a class="open-orig" id="business-b-link" href="images/white_business1.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img id="business-b-img" src="images/white_business1.jpg" alt="事業とグループ企業 白背景" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <p class="note">レイアウトスイッチは両カードに同時に反映されます（レイアウト × 背景の全4パターンを収録）。</p>
+  </section>
+
+  <!-- ===================== ABOUT US ===================== -->
+  <section class="panel-view" id="view-about">
+    <div class="view-head">
+      <div>
+        <h2>吉見グループについて — 背景2種</h2>
+        <p>ごあいさつ・企業理念・事業領域・数字で見る吉見グループを掲載した下層ページです。</p>
+      </div>
+      <div class="controls">
+        <label class="sync-toggle">
+          <input type="checkbox" class="sync-check" data-group="about" checked>
+          スクロール連動
+        </label>
+      </div>
+    </div>
+    <div class="compare-grid sync-group" data-group="about">
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag a">A</span>
+          <div class="titles">
+            <div class="t1">吉見グループについて — グレー背景</div>
+            <div class="t2">Gray background</div>
+          </div>
+          <a class="open-orig" href="images/gray_about.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/gray_about.jpg" alt="吉見グループについて グレー背景" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag b">B</span>
+          <div class="titles">
+            <div class="t1">吉見グループについて — 白背景</div>
+            <div class="t2">White background</div>
+          </div>
+          <a class="open-orig" href="images/white_about.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/white_about.jpg" alt="吉見グループについて 白背景" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // ---- tabs ----
+  const tabs = document.querySelectorAll('nav.tabs button');
+  const views = document.querySelectorAll('.panel-view');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.dataset.target;
+      views.forEach(v => v.classList.toggle('active', v.id === target));
+    });
+  });
+
+  // ---- business layout switch ----
+  const layoutSeg = document.getElementById('business-layout-seg');
+  const bImgA = document.getElementById('business-a-img');
+  const bImgB = document.getElementById('business-b-img');
+  const bLinkA = document.getElementById('business-a-link');
+  const bLinkB = document.getElementById('business-b-link');
+
+  layoutSeg.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    [...layoutSeg.children].forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const layout = btn.dataset.layout; // 1 | 2
+    bImgA.src = `images/gray_business${layout}.jpg`;
+    bImgB.src = `images/white_business${layout}.jpg`;
+    bLinkA.href = `images/gray_business${layout}.jpg`;
+    bLinkB.href = `images/white_business${layout}.jpg`;
+  });
+
+  // ---- synced scrolling per group ----
+  document.querySelectorAll('.sync-group').forEach(group => {
+    const groupName = group.dataset.group;
+    const frames = [...group.querySelectorAll('.img-frame')];
+    const checkbox = document.querySelector(`.sync-check[data-group="${groupName}"]`);
+    let syncing = false;
+
+    frames.forEach(frame => {
+      frame.addEventListener('scroll', () => {
+        if (!checkbox.checked || syncing) return;
+        syncing = true;
+        const ratio = frame.scrollTop / (frame.scrollHeight - frame.clientHeight || 1);
+        frames.forEach(other => {
+          if (other === frame) return;
+          other.scrollTop = ratio * (other.scrollHeight - other.clientHeight);
+        });
+        requestAnimationFrame(() => { syncing = false; });
+      });
+    });
+  });
+
+  // ---- lightbox ----
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.img-frame img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightbox-close').addEventListener('click', () => {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  });
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    }
+  });
+</script>
+
+</body>
+</html>
