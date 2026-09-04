@@ -333,7 +333,7 @@
 
   <div class="grid" id="grid"></div>
 
-  <div class="summary">
+  <!-- <div class="summary">
     <div class="summary-head">
       <h2>検討結果</h2>
       <p>選択内容はこのブラウザに保存されます。担当者間で共有する際はメモの内容をお伝えください。</p>
@@ -341,7 +341,7 @@
     <div class="summary-body" id="summaryBody">
       <p class="summary-empty">まだ候補が選ばれていません。各動画下部のチェックボックスから選択してください。</p>
     </div>
-  </div>
+  </div> -->
 
   <footer>
     &copy; 長谷川ウェブ設計 — 吉見グループ様 HP制作プロジェクト内部レビュー用
@@ -425,43 +425,13 @@ VIDEOS.forEach(v => {
       <span>${v.desc}</span>
       <span class="dot">・</span>
     </div>
-    <div class="card-foot">
-      <label class="select-row" data-role="selectRow">
-        <span class="box"></span>
-        <span class="label-text">この動画を候補に選ぶ</span>
-      </label>
-      <textarea class="note" data-role="note" placeholder="検討メモ（気づいた点、理由など）"></textarea>
-    </div>
   `;
 
   grid.appendChild(card);
 
   const videoEl = card.querySelector('[data-role="video"]');
-  const selectRow = card.querySelector('[data-role="selectRow"]');
-  const noteEl = card.querySelector('[data-role="note"]');
-
-  // restore state
-  noteEl.value = state[v.id].note || "";
-  applySelected(card, selectRow, state[v.id].selected);
 
 
-
-  selectRow.addEventListener("click", () => {
-    state[v.id].selected = !state[v.id].selected;
-    applySelected(card, selectRow, state[v.id].selected);
-    saveState(state);
-    renderSummary();
-  });
-
-  let noteTimer;
-  noteEl.addEventListener("input", () => {
-    clearTimeout(noteTimer);
-    noteTimer = setTimeout(() => {
-      state[v.id].note = noteEl.value;
-      saveState(state);
-      renderSummary();
-    }, 300);
-  });
 });
 
 function applySelected(card, selectRow, isSelected){
