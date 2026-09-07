@@ -313,13 +313,14 @@
         <div class="sub">Design Review Tool</div>
         <h1>吉見グループ株式会社 コーポレートサイト デザイン比較</h1>
       </div>
-      <div class="sub" id="page-count-label">4 ページ種 / 全10案</div>
+      <div class="sub" id="page-count-label">5 ページ種 / 全12案</div>
     </div>
     <nav class="tabs" id="tabs">
       <button class="active" data-target="view-top"><span class="en">Top Page</span>トップページ</button>
       <button data-target="view-company"><span class="en">Company</span>企業情報</button>
       <button data-target="view-business"><span class="en">Business &amp; Group</span>事業とグループ企業</button>
       <button data-target="view-about"><span class="en">About Us</span>吉見グループについて</button>
+      <button data-target="view-infographic"><span class="en">In Numbers</span>数字で見るインフォグラフィック</button>
     </nav>
   </div>
 </header>
@@ -335,7 +336,7 @@
       </div>
       <div class="controls">
         <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="top">
+          <input type="checkbox" class="sync-check" data-group="top" checked>
           スクロール連動
         </label>
       </div>
@@ -380,7 +381,7 @@
       </div>
       <div class="controls">
         <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="company">
+          <input type="checkbox" class="sync-check" data-group="company" checked>
           スクロール連動
         </label>
       </div>
@@ -428,7 +429,7 @@
           <button data-layout="2">レイアウト2（タブ+カード）</button>
         </div>
         <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="business">
+          <input type="checkbox" class="sync-check" data-group="business" checked>
           スクロール連動
         </label>
       </div>
@@ -473,7 +474,7 @@
       </div>
       <div class="controls">
         <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="about">
+          <input type="checkbox" class="sync-check" data-group="about" checked>
           スクロール連動
         </label>
       </div>
@@ -506,6 +507,51 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ===================== INFOGRAPHIC (IN NUMBERS) ===================== -->
+  <section class="panel-view" id="view-infographic">
+    <div class="view-head">
+      <div>
+        <h2>数字で見る吉見グループ — インフォグラフィック2案</h2>
+        <p>「In Numbers」セクションのビジュアル表現の比較です。カード横並び型（A）とアイソメトリック建物型（B）を比較できます。</p>
+      </div>
+      <div class="controls">
+        <label class="sync-toggle">
+          <input type="checkbox" class="sync-check" data-group="infographic" checked>
+          スクロール連動
+        </label>
+      </div>
+    </div>
+    <div class="compare-grid sync-group" data-group="infographic">
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag a">A</span>
+          <div class="titles">
+            <div class="t1">カード横並び型</div>
+            <div class="t2">Pattern A — 3-card row layout</div>
+          </div>
+          <a class="open-orig" href="images/infographic_card.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/infographic_card.jpg" alt="数字で見る吉見グループ カード横並び型" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag b">B</span>
+          <div class="titles">
+            <div class="t1">アイソメトリック建物型</div>
+            <div class="t2">Pattern B — Isometric building illustration</div>
+          </div>
+          <a class="open-orig" href="images/infographic_isometric.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/infographic_isometric.jpg" alt="数字で見る吉見グループ アイソメトリック建物型" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <p class="note">実際のページでは3つの数値（創業年数・従業員数・グループ会社数）がそれぞれ表示されます。モックでは数値はダミー（102年）で統一されています。</p>
   </section>
 
 </main>
