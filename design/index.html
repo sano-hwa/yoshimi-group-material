@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>吉見グループ株式会社 コーポレートサイト デザイン比較</title>
+<title>吉見グループ株式会社 コーポレートサイト デザイン確認</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,10 +17,9 @@
     --muted:#68727c;
     --navy:#28527e;
     --navy-deep:#173151;
-    --teal:#4d8a8f;
     --tag-a:#28527e;
     --tag-b:#b4703c;
-    --radius:2px;
+    --tag-c:#4d8a6f;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -30,7 +29,6 @@
     font-family:"Zen Kaku Gothic New","Inter",sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  /* ---------- header ---------- */
   header.tool-header{
     position:sticky;
     top:0;
@@ -78,7 +76,7 @@
     font-family:inherit;
     font-size:14px;
     font-weight:500;
-    padding:12px 20px 13px;
+    padding:12px 18px 13px;
     cursor:pointer;
     white-space:nowrap;
     border-bottom:2px solid transparent;
@@ -100,7 +98,6 @@
   }
   nav.tabs button.active .en{color:#e8b876;}
 
-  /* ---------- layout ---------- */
   main{
     max-width:1440px;
     margin:0 auto;
@@ -136,30 +133,6 @@
     gap:10px;
     flex-wrap:wrap;
   }
-  .seg{
-    display:flex;
-    border:1px solid var(--line);
-    background:var(--panel);
-    border-radius:3px;
-    overflow:hidden;
-  }
-  .seg button{
-    appearance:none;
-    border:none;
-    background:transparent;
-    font-family:inherit;
-    font-size:12.5px;
-    font-weight:500;
-    padding:8px 16px;
-    cursor:pointer;
-    color:var(--muted);
-    border-left:1px solid var(--line);
-  }
-  .seg button:first-child{border-left:none;}
-  .seg button.active{
-    background:var(--navy);
-    color:#fff;
-  }
   .sync-toggle{
     display:flex;
     align-items:center;
@@ -175,10 +148,16 @@
   }
   .sync-toggle input{margin:0;accent-color:var(--navy);}
 
-  /* ---------- compare grid ---------- */
   .compare-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .flow-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
     gap:1px;
     background:var(--line);
     border:1px solid var(--line);
@@ -211,17 +190,12 @@
   }
   .tag.a{background:var(--tag-a);}
   .tag.b{background:var(--tag-b);}
+  .tag.c{background:var(--tag-c);}
   .card-head .titles{flex:1;min-width:0;}
   .card-head .titles .t1{
     font-size:14px;
     font-weight:700;
     line-height:1.3;
-  }
-  .card-head .titles .t2{
-    font-size:11px;
-    color:var(--muted);
-    font-family:"Inter",sans-serif;
-    letter-spacing:.02em;
   }
   .card-head a.open-orig{
     font-size:11px;
@@ -253,7 +227,8 @@
     cursor:zoom-in;
   }
 
-  /* ---------- notes ---------- */
+  .single-card .img-frame{height:80vh;}
+
   .note{
     margin-top:16px;
     font-size:12px;
@@ -261,7 +236,6 @@
     line-height:1.7;
   }
 
-  /* ---------- lightbox ---------- */
   .lightbox{
     position:fixed;
     inset:0;
@@ -296,8 +270,9 @@
   }
 
   @media (max-width:880px){
-    .compare-grid{grid-template-columns:1fr;}
+    .compare-grid, .flow-grid{grid-template-columns:1fr;}
     .img-frame{height:60vh;}
+    .single-card .img-frame{height:65vh;}
     .header-inner{padding:14px 16px 0;}
     main{padding:20px 16px 60px;}
     .view-head{flex-direction:column;align-items:flex-start;}
@@ -311,15 +286,17 @@
     <div class="brand-row">
       <div>
         <div class="sub">Design Review Tool</div>
-        <h1>吉見グループ株式会社 コーポレートサイト デザイン比較</h1>
+        <h1>吉見グループ株式会社 コーポレートサイト デザイン確認</h1>
       </div>
-      <div class="sub" id="page-count-label">4 ページ種 / 全10案</div>
+      <div class="sub" id="page-count-label">6 ページ</div>
     </div>
     <nav class="tabs" id="tabs">
       <button class="active" data-target="view-top"><span class="en">Top Page</span>トップページ</button>
       <button data-target="view-company"><span class="en">Company</span>企業情報</button>
       <button data-target="view-business"><span class="en">Business &amp; Group</span>事業とグループ企業</button>
       <button data-target="view-about"><span class="en">About Us</span>吉見グループについて</button>
+      <button data-target="view-contact"><span class="en">Contact</span>お問い合わせ</button>
+      <button data-target="view-privacy"><span class="en">Privacy Policy</span>プライバシーポリシー</button>
     </nav>
   </div>
 </header>
@@ -330,86 +307,43 @@
   <section class="panel-view active" id="view-top">
     <div class="view-head">
       <div>
-        <h2>トップページ — 2案</h2>
-        <p>ヒーロー以下、事業紹介の見せ方が異なる2パターンです。スクロールして下部まで比較してください。</p>
-      </div>
-      <div class="controls">
-        <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="top">
-          スクロール連動
-        </label>
+        <h2>トップページ</h2>
+        <p>確定デザインです。</p>
       </div>
     </div>
-    <div class="compare-grid sync-group" data-group="top">
+    <div class="compare-grid single-card" style="grid-template-columns:1fr;">
       <div class="compare-card">
         <div class="card-head">
-          <span class="tag a">A</span>
           <div class="titles">
-            <div class="t1">TOP 案1</div>
-            <div class="t2">Pattern A — Circular business diagram</div>
+            <div class="t1">TOP</div>
           </div>
-          <a class="open-orig" href="images/top1.jpg" target="_blank" rel="noopener">原寸を開く</a>
+          <a class="open-orig" href="images/top.jpg" target="_blank" rel="noopener">原寸を開く</a>
         </div>
         <div class="img-frame" data-role="scroller">
-          <img src="images/top1.jpg" alt="トップページ 案1" loading="lazy">
-        </div>
-      </div>
-      <div class="compare-card">
-        <div class="card-head">
-          <span class="tag b">B</span>
-          <div class="titles">
-            <div class="t1">TOP 案2</div>
-            <div class="t2">Pattern B — Photo gallery layout</div>
-          </div>
-          <a class="open-orig" href="images/top2.jpg" target="_blank" rel="noopener">原寸を開く</a>
-        </div>
-        <div class="img-frame" data-role="scroller">
-          <img src="images/top2.jpg" alt="トップページ 案2" loading="lazy">
+          <img src="images/top.jpg" alt="トップページ" loading="lazy">
         </div>
       </div>
     </div>
-    <p class="note">画像クリックで原寸表示（ライトボックス）。「原寸を開く」で別タブに元画像を表示します。</p>
   </section>
 
   <!-- ===================== COMPANY ===================== -->
   <section class="panel-view" id="view-company">
     <div class="view-head">
       <div>
-        <h2>企業情報 — 背景2種</h2>
-        <p>会社概要・アクセス・グループ会社一覧の下層ページです。背景色のみが異なる2パターンを比較できます。</p>
-      </div>
-      <div class="controls">
-        <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="company">
-          スクロール連動
-        </label>
+        <h2>企業情報</h2>
+        <p>確定デザインです。会社概要・アクセス・グループ会社一覧を掲載しています。</p>
       </div>
     </div>
-    <div class="compare-grid sync-group" data-group="company">
+    <div class="compare-grid single-card" style="grid-template-columns:1fr;">
       <div class="compare-card">
         <div class="card-head">
-          <span class="tag a">A</span>
           <div class="titles">
-            <div class="t1">企業情報 — グレー背景</div>
-            <div class="t2">Gray background</div>
-          </div>
-          <a class="open-orig" href="images/gray_company.jpg" target="_blank" rel="noopener">原寸を開く</a>
-        </div>
-        <div class="img-frame" data-role="scroller">
-          <img src="images/gray_company.jpg" alt="企業情報 グレー背景" loading="lazy">
-        </div>
-      </div>
-      <div class="compare-card">
-        <div class="card-head">
-          <span class="tag b">B</span>
-          <div class="titles">
-            <div class="t1">企業情報 — 白背景</div>
-            <div class="t2">White background</div>
+            <div class="t1">Company</div>
           </div>
           <a class="open-orig" href="images/white_company.jpg" target="_blank" rel="noopener">原寸を開く</a>
         </div>
         <div class="img-frame" data-role="scroller">
-          <img src="images/white_company.jpg" alt="企業情報 白背景" loading="lazy">
+          <img src="images/white_company.jpg" alt="企業情報" loading="lazy">
         </div>
       </div>
     </div>
@@ -419,90 +353,120 @@
   <section class="panel-view" id="view-business">
     <div class="view-head">
       <div>
-        <h2>事業とグループ企業 — レイアウト2案 × 背景2種</h2>
-        <p>左サイドナビ型（レイアウト1）とタブ+カード型（レイアウト2）を比較できます。背景色は下のスイッチで切り替えてください。</p>
-      </div>
-      <div class="controls">
-        <div class="seg" id="business-layout-seg">
-          <button class="active" data-layout="1">レイアウト1（左サイドナビ）</button>
-          <button data-layout="2">レイアウト2（タブ+カード）</button>
-        </div>
-        <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="business">
-          スクロール連動
-        </label>
+        <h2>事業とグループ企業</h2>
+        <p>確定デザインです。タブ+カード型のレイアウトに決定しました。</p>
       </div>
     </div>
-    <div class="compare-grid sync-group" data-group="business">
+    <div class="compare-grid single-card" style="grid-template-columns:1fr;">
       <div class="compare-card">
         <div class="card-head">
-          <span class="tag a">A</span>
           <div class="titles">
-            <div class="t1">グレー背景</div>
-            <div class="t2" id="business-a-label">Gray background</div>
+            <div class="t1">Business &amp; Group</div>
           </div>
-          <a class="open-orig" id="business-a-link" href="images/gray_business1.jpg" target="_blank" rel="noopener">原寸を開く</a>
+          <a class="open-orig" href="images/white_business2.jpg" target="_blank" rel="noopener">原寸を開く</a>
         </div>
         <div class="img-frame" data-role="scroller">
-          <img id="business-a-img" src="images/gray_business1.jpg" alt="事業とグループ企業 グレー背景" loading="lazy">
-        </div>
-      </div>
-      <div class="compare-card">
-        <div class="card-head">
-          <span class="tag b">B</span>
-          <div class="titles">
-            <div class="t1">白背景</div>
-            <div class="t2" id="business-b-label">White background</div>
-          </div>
-          <a class="open-orig" id="business-b-link" href="images/white_business1.jpg" target="_blank" rel="noopener">原寸を開く</a>
-        </div>
-        <div class="img-frame" data-role="scroller">
-          <img id="business-b-img" src="images/white_business1.jpg" alt="事業とグループ企業 白背景" loading="lazy">
+          <img src="images/white_business2.jpg" alt="事業とグループ企業" loading="lazy">
         </div>
       </div>
     </div>
-    <p class="note">レイアウトスイッチは両カードに同時に反映されます（レイアウト × 背景の全4パターンを収録）。</p>
   </section>
 
   <!-- ===================== ABOUT US ===================== -->
   <section class="panel-view" id="view-about">
     <div class="view-head">
       <div>
-        <h2>吉見グループについて — 背景2種</h2>
-        <p>ごあいさつ・企業理念・事業領域・数字で見る吉見グループを掲載した下層ページです。</p>
-      </div>
-      <div class="controls">
-        <label class="sync-toggle">
-          <input type="checkbox" class="sync-check" data-group="about">
-          スクロール連動
-        </label>
+        <h2>吉見グループについて</h2>
+        <p>確定デザインです。ごあいさつ・企業理念・事業領域・数字で見る吉見グループ（アイソメトリック）・男女比／年間休日／職業比率などを掲載した最新版です。</p>
       </div>
     </div>
-    <div class="compare-grid sync-group" data-group="about">
+    <div class="compare-grid single-card" style="grid-template-columns:1fr;">
       <div class="compare-card">
         <div class="card-head">
-          <span class="tag a">A</span>
           <div class="titles">
-            <div class="t1">吉見グループについて — グレー背景</div>
-            <div class="t2">Gray background</div>
-          </div>
-          <a class="open-orig" href="images/gray_about.jpg" target="_blank" rel="noopener">原寸を開く</a>
-        </div>
-        <div class="img-frame" data-role="scroller">
-          <img src="images/gray_about.jpg" alt="吉見グループについて グレー背景" loading="lazy">
-        </div>
-      </div>
-      <div class="compare-card">
-        <div class="card-head">
-          <span class="tag b">B</span>
-          <div class="titles">
-            <div class="t1">吉見グループについて — 白背景</div>
-            <div class="t2">White background</div>
+            <div class="t1">About us</div>
           </div>
           <a class="open-orig" href="images/white_about.jpg" target="_blank" rel="noopener">原寸を開く</a>
         </div>
         <div class="img-frame" data-role="scroller">
-          <img src="images/white_about.jpg" alt="吉見グループについて 白背景" loading="lazy">
+          <img src="images/white_about.jpg" alt="吉見グループについて" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="panel-view" id="view-contact">
+    <div class="view-head">
+      <div>
+        <h2>お問い合わせ — 3ステップ</h2>
+        <p>入力・確認・送信完了までの一連のフローです。</p>
+      </div>
+      <div class="controls">
+        <label class="sync-toggle">
+          <input type="checkbox" class="sync-check" data-group="contact">
+          スクロール連動
+        </label>
+      </div>
+    </div>
+    <div class="flow-grid sync-group" data-group="contact">
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag a">1</span>
+          <div class="titles">
+            <div class="t1">入力</div>
+          </div>
+          <a class="open-orig" href="images/white_contact.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/white_contact.jpg" alt="お問い合わせ 入力" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag b">2</span>
+          <div class="titles">
+            <div class="t1">確認</div>
+          </div>
+          <a class="open-orig" href="images/white_contact_confirm.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/white_contact_confirm.jpg" alt="お問い合わせ 確認" loading="lazy">
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="card-head">
+          <span class="tag c">3</span>
+          <div class="titles">
+            <div class="t1">送信完了</div>
+          </div>
+          <a class="open-orig" href="images/white_contact_thanks.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/white_contact_thanks.jpg" alt="お問い合わせ 送信完了" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRIVACY POLICY ===================== -->
+  <section class="panel-view" id="view-privacy">
+    <div class="view-head">
+      <div>
+        <h2>プライバシーポリシー</h2>
+        <p>確定デザインです。</p>
+      </div>
+    </div>
+    <div class="compare-grid single-card" style="grid-template-columns:1fr;">
+      <div class="compare-card">
+        <div class="card-head">
+          <div class="titles">
+            <div class="t1">Privacy Policy</div>
+          </div>
+          <a class="open-orig" href="images/white_privacy.jpg" target="_blank" rel="noopener">原寸を開く</a>
+        </div>
+        <div class="img-frame" data-role="scroller">
+          <img src="images/white_privacy.jpg" alt="プライバシーポリシー" loading="lazy">
         </div>
       </div>
     </div>
@@ -516,7 +480,6 @@
 </div>
 
 <script>
-  // ---- tabs ----
   const tabs = document.querySelectorAll('nav.tabs button');
   const views = document.querySelectorAll('.panel-view');
   tabs.forEach(btn => {
@@ -528,26 +491,6 @@
     });
   });
 
-  // ---- business layout switch ----
-  const layoutSeg = document.getElementById('business-layout-seg');
-  const bImgA = document.getElementById('business-a-img');
-  const bImgB = document.getElementById('business-b-img');
-  const bLinkA = document.getElementById('business-a-link');
-  const bLinkB = document.getElementById('business-b-link');
-
-  layoutSeg.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if(!btn) return;
-    [...layoutSeg.children].forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const layout = btn.dataset.layout; // 1 | 2
-    bImgA.src = `images/gray_business${layout}.jpg`;
-    bImgB.src = `images/white_business${layout}.jpg`;
-    bLinkA.href = `images/gray_business${layout}.jpg`;
-    bLinkB.href = `images/white_business${layout}.jpg`;
-  });
-
-  // ---- synced scrolling per group ----
   document.querySelectorAll('.sync-group').forEach(group => {
     const groupName = group.dataset.group;
     const frames = [...group.querySelectorAll('.img-frame')];
@@ -568,7 +511,6 @@
     });
   });
 
-  // ---- lightbox ----
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   document.querySelectorAll('.img-frame img').forEach(img => {
